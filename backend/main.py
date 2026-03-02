@@ -48,7 +48,7 @@ def get_demographics(address: str = Query(..., description="Full property addres
     except (KeyError, IndexError, ValueError):
         return {"error": "Census Tract not found in geocoder response."}
 
-    # 2️⃣ Fetch ACS 2022 demographic data
+    # Fetch ACS 2022 demographic data
     # Example variables for basic race demographics (you can expand)
     acs_vars = [
         "B02001_002E",  # White
@@ -77,7 +77,7 @@ def get_demographics(address: str = Query(..., description="Full property addres
     except (ValueError, IndexError):
         return {"error": "ACS API returned invalid response."}
 
-    # 3️⃣ Format data for frontend
+    # Format data for frontend
     demographics = {
         "Census Tract": census_tract,
         "GEOID": tract_geoid,
@@ -93,5 +93,27 @@ def get_demographics(address: str = Query(..., description="Full property addres
     # Calculate percentages
     for key in ["White", "Black or African American", "Hispanic or Latino", "Asian", "American Indian or Alaska Native", "Native Hawaiian or Pacific Islander"]:
         demographics[f"{key} %"] = round((demographics[key] / demographics["Total Population"]) * 100, 1) if demographics["Total Population"] else 0
+
+    # Add "Other" and "Other %"
+    known_keys = [
+        "White",
+        "Black or African American",
+        "Hispanic or Latino",
+        "Asian",
+        "American Indian or Alaska Native",
+        "Native Hawaiian or Pacific Islander",
+    ]
+
+    known_sum = sum(demographics[k] for k in known_keys)
+
+    demographics["Other"] = max(
+        demographics["Total Population"] - known_sum,
+        0
+    )
+
+    demographics["Other %"] = round(
+        (demographics["Other"] / demographics["Total Population"]) * 100,
+        1
+    ) if demographics["Total Population"] else 0
 
     return demographics
