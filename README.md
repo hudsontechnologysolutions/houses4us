@@ -1,8 +1,10 @@
 # Houses4Us
 
-Automate Section 4a of the Affirmative Fair Housing Marketing Plan for Jersey City affordable housing developments.
+About
+A full-stack app to automate my mother’s work within the affordable housing industry. Given a location, it derives demographic information needed for the “Affirmative Fair Housing Marketing Plan” for the Department of Housing, Economic Development And Commerce Division Of Affordable Housing of Jersey City.
 
-Generate Census Tract and demographic data (ACS 5-Year Estimates) from a property address.
+Provides the official 2024 ACS 5-year demographic statistics for this tract.
+
 
 https://your-deployment-url.netlify.app/
 

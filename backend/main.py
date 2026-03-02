@@ -28,7 +28,7 @@ def get_demographics(address: str = Query(..., description="Full property addres
         "https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress?"
         f"address={requests.utils.quote(address)}"
         "&benchmark=Public_AR_Current"
-        "&vintage=Current_Current"
+        "&vintage=ACS2024_Current"
         "&format=json"
     )
 
@@ -62,7 +62,7 @@ def get_demographics(address: str = Query(..., description="Full property addres
     vars_str = ",".join(acs_vars)
 
     acs_url = (
-        f"https://api.census.gov/data/2022/acs/acs5?get={vars_str}&for=tract:{census_tract}&in=state:34+county:017"
+        f"https://api.census.gov/data/2024/acs/acs5?get={vars_str}&for=tract:{census_tract}&in=state:34+county:017"
     )
 
     try:
