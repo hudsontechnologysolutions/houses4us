@@ -1,12 +1,10 @@
 # Houses4Us
 
-About
 A full-stack app to automate my mother’s work within the affordable housing industry. Given a location, it derives demographic information needed for the “Affirmative Fair Housing Marketing Plan” for the Department of Housing, Economic Development And Commerce Division Of Affordable Housing of Jersey City.
 
 Provides the official 2024 ACS 5-year demographic statistics for this tract.
 
-
-https://your-deployment-url.netlify.app/
+https://houses4us.netlify.app/
 
 ---
 

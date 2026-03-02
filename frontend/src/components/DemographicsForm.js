@@ -49,13 +49,13 @@ export default function DemographicsForm() {
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-blue-50 flex items-center justify-center p-4">
       <div className="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8 border-t-8 border-blue-700">
         <h1 className="text-3xl font-extrabold text-blue-900 mb-2 text-center">
-          🗽CITY OF JERSEY CITY🗽
+          🗽HOUSES 4 US🗽
         </h1>
         <h1 className="text-2xl font-extrabold text-blue-900 mb-2 text-center">
-          DEPARTMENT OF HOUSING, ECONOMIC DEVELOPMENT AND COMMERCE DIVISION OF AFFORDABLE HOUSING
+          CITY OF JERSEY CITY DEPARTMENT OF HOUSING, ECONOMIC DEVELOPMENT AND COMMERCE DIVISION OF AFFORDABLE HOUSING
         </h1>
         <h1 className="text-1xl font-extrabold text-blue-900 mb-2 text-center">
-          AFFIRMATIVE FAIR HOUSING MARKETING PLAN
+          AFFIRMATIVE FAIR HOUSING MARKETING PLAN - SECTION 4A
         </h1>
         <p className="text-gray-700 mb-6 text-center">
           Enter a property address to generate Census Tract + ACS demographics for <strong><u>2024</u></strong>.
