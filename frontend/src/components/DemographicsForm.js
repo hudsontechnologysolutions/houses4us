@@ -42,10 +42,16 @@ export default function DemographicsForm() {
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-blue-50 flex items-center justify-center p-4">
       <div className="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8 border-t-8 border-blue-700">
         <h1 className="text-3xl font-extrabold text-blue-900 mb-6 text-center">
-          Jersey City Housing Section 4a
+          🗽CITY OF JERSEY CITY🗽
+        </h1>
+        <h1 className="text-2xl font-extrabold text-blue-900 mb-6 text-center">
+          DEPARTMENT OF HOUSING, ECONOMIC DEVELOPMENT AND COMMERCE DIVISON OF AFFORDABLE HOUSING
+        </h1>
+         <h1 className="text-1xl font-extrabold text-blue-900 mb-6 text-center">
+          AFFIRMATIVE FAIR HOUSING MARKETING PLAN -- SECTION 4A
         </h1>
         <p className="text-gray-700 mb-4 text-center">
-          Enter a property address to generate demographic information for the Affirmative Fair Housing Marketing Plan.
+          Enter a property address to generate demographic information for the census tract of any given address.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
