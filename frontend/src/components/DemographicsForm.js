@@ -58,7 +58,7 @@ export default function DemographicsForm() {
           AFFIRMATIVE FAIR HOUSING MARKETING PLAN
         </h1>
         <p className="text-gray-700 mb-6 text-center">
-          Enter a property address to generate Census Tract + ACS demographics.
+          Enter a property address to generate Census Tract + ACS demographics for <strong><u>2024</u></strong>.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
