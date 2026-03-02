@@ -1,142 +1,87 @@
-# 🏠 Houses4Us
+# Houses4Us
 
-**Affirmative Fair Housing Marketing Plan (AFHMP) — Section 4a Demographic Automation**
+Automate Section 4a of the Affirmative Fair Housing Marketing Plan for Jersey City affordable housing developments.
 
-> Automates demographic data collection for the Jersey City Division of Affordable Housing's AFHMP form. Given a property address, Houses4Us derives the Census Tract and pulls live ACS data from the U.S. Census Bureau — then exports a pre-filled AFHMP Section 4a table as Word, PDF, or Excel.
+Generate Census Tract and demographic data (ACS 5-Year Estimates) from a property address.
+
+https://your-deployment-url.netlify.app/
 
 ---
 
-## 🚀 Quick Start
+## Stack
 
-### Prerequisites
-- [Docker](https://www.docker.com/get-started) & Docker Compose
-- Internet connection (calls the Census Bureau APIs)
+- React (Create React App + TailwindCSS) – frontend
+- FastAPI – backend
+- Python
+- U.S. Census Geocoder API
+- U.S. Census ACS 5-Year API
+- Vercel (deployment target)
 
-### Run
+---
 
+## Run Locally
+
+### Backend
 ```bash
-git clone <repo-url>
-cd houses4us
+cd backend
+python -m venv venv
+source venv/bin/activate   # Mac/Linux
+# OR venv\Scripts\activate  # Windows
 
-# Optional: add a free Census API key for higher rate limits
-cp .env.example .env
-# edit .env and add your CENSUS_API_KEY
-
-docker compose up --build
-```
-
-Then open **http://localhost:3000** in your browser.
-
----
-
-## 🗺️ How It Works
-
-```
-User enters address
-       ↓
-Census Geocoder API
-(geocoding.geo.census.gov)
-       ↓
-   State FIPS + County FIPS + Census Tract
-       ↓
-ACS 5-Year Estimates API
-(api.census.gov)
-   ├── B02001: Race (White, Black, Asian, AIAN, NHOPI)
-   ├── B03003: Hispanic or Latino
-   ├── B18101: Persons with Disabilities
-   └── B11003: Families with Children under 18
-       ↓
-Section 4a Dashboard
-       ↓
-Export: DOCX / PDF / Excel
+pip install -r requirements.txt
+uvicorn main:app --reload
 ```
 
 ---
 
-## 📋 Section 4a — What Gets Filled
-
-The following demographic groups are auto-populated for the census tract:
-
-| Demographic | ACS Variable |
-|---|---|
-| White | B02001_002E |
-| Black or African American | B02001_003E |
-| Hispanic or Latino | B03003_003E |
-| Asian | B02001_005E |
-| American Indian or Alaskan Native | B02001_004E |
-| Native Hawaiian or Pacific Islander | B02001_006E |
-| Persons with Disabilities | B18101 (summed) |
-| Families with Children under 18 | B11003 (summed) |
-| Other | B02001_007E + B02001_008E |
-
----
-
-## 📁 Project Structure
-
-```
-houses4us/
-├── backend/
-│   ├── app/
-│   │   ├── main.py                    # FastAPI app
-│   │   ├── routers/
-│   │   │   ├── geocode.py             # Address → Census Tract
-│   │   │   ├── demographics.py        # ACS data fetcher
-│   │   │   └── export.py              # DOCX / PDF / Excel export
-│   │   └── services/
-│   │       ├── census_geocoder.py     # Census Geocoder API
-│   │       ├── census_acs.py          # ACS 5-Year data
-│   │       ├── docx_generator.py      # Word document builder
-│   │       ├── excel_generator.py     # Excel workbook builder
-│   │       └── pdf_generator.py       # PDF report builder
-│   ├── requirements.txt
-│   └── Dockerfile
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── HomePage.jsx           # Address input
-│   │   │   └── DashboardPage.jsx      # Demographics + exports
-│   │   ├── styles/
-│   │   │   └── global.css
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── nginx.conf                     # Production proxy config
-│   ├── package.json
-│   └── Dockerfile
-├── docker-compose.yml
-├── .env.example
-└── README.md
+### Frontend
+```bash
+cd frontend
+npm install
+npm start
 ```
 
 ---
 
-## 🔌 API Endpoints
+API
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/v1/geocode` | Address → Census Tract + FIPS |
-| POST | `/api/v1/demographics` | Census Tract → ACS Demographics |
-| POST | `/api/v1/export/docx` | Generate AFHMP Word document |
-| POST | `/api/v1/export/excel` | Generate Excel workbook with chart |
-| POST | `/api/v1/export/pdf` | Generate PDF report |
-| GET | `/health` | Health check |
+POST /api/demographics
 
-Interactive API docs: **http://localhost:8000/docs**
+Generate Census Tract and demographic data fro a given address.
+
+Query Parameter:
+```Code
+address=Full property address
+```
+
+Example:
+```Code
+GET /api/demographics?address=829 Garfield Avenue, Jersey City, NJ 07305
+```
+
+Response:
+```JSON
+{
+  "Census Tract": "004500",
+  "GEOID": "34017004500",
+  "White": 1234,
+  "White %": 45.3,
+  "Black or African American": 567,
+  "Black or African American %": 20.8,
+  "Hispanic or Latino": 432,
+  "Hispanic or Latino %": 15.9,
+  "Asian": 321,
+  "Asian %": 11.8,
+  "American Indian or Alaska Native": 12,
+  "American Indian or Alaska Native %": 0.4,
+  "Native Hawaiian or Pacific Islander": 5,
+  "Native Hawaiian or Pacific Islander %": 0.2,
+  "Total Population": 2721
+}
+```
 
 ---
 
-## 🔑 Census API Key
+License
 
-The Census Bureau APIs work **without a key** at low usage volumes. For production or frequent use, get a free key:
-
-1. Visit https://api.census.gov/data/key_signup.html
-2. Add `CENSUS_API_KEY=your_key` to your `.env` file
-3. Restart: `docker compose restart backend`
-
----
-
-## 🏙️ About
-
-Built for **Quetzal Consulting, LLC** to automate AFHMP Section 4a preparation for the **Jersey City Division of Affordable Housing (DOAH)**, in compliance with Jersey City Ordinance Chapter 188 and applicable HUD guidelines.
-
-**Tech Stack:** FastAPI · React · ReportLab · python-docx · openpyxl · Docker
-**Data Source:** U.S. Census Bureau ACS 5-Year Estimates
+MIT
