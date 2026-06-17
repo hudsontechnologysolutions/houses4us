@@ -1,6 +1,9 @@
+import os
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import requests
+
+CENSUS_API_KEY = os.environ.get("CENSUS_API_KEY", "")
 
 app = FastAPI()
 
@@ -62,7 +65,7 @@ def get_demographics(address: str = Query(..., description="Full property addres
     vars_str = ",".join(acs_vars)
 
     acs_url = (
-        f"https://api.census.gov/data/2024/acs/acs5?get={vars_str}&for=tract:{census_tract}&in=state:34+county:017"
+        f"https://api.census.gov/data/2024/acs/acs5?get={vars_str}&for=tract:{census_tract}&in=state:34+county:017&key={CENSUS_API_KEY}"
     )
 
     try:
