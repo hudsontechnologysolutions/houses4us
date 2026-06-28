@@ -78,7 +78,7 @@ def get_demographics(address: str = Query(..., description="Full property addres
     except requests.RequestException as e:
         return {"error": f"Failed to fetch ACS data: {str(e)}"}
     except (ValueError, IndexError):
-        return {"error": "ACS API returned invalid response."}
+        return {"error": f"ACS API returned invalid response. Status: {acs_res.status_code}, Body: {acs_res.text[:500]}"}
 
     # Format data for frontend
     demographics = {
