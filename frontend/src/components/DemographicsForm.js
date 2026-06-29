@@ -61,7 +61,7 @@ export default function DemographicsForm() {
           AFFIRMATIVE FAIR HOUSING MARKETING PLAN - SECTION 4A
         </h1>
         <p className="text-gray-700 mb-6 text-center">
-          Enter a property address to generate Census Tract + ACS demographics for <strong><u>2024</u></strong>.
+          Generate Census Tract and demographic data required for Section 4A of the Affirmative Fair Housing Marketing Plan using the U.S. Census Bureau's <strong><u>ACS 2024 5-Year Estimates</u></strong>.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
