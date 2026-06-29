@@ -25,7 +25,7 @@ export default function DemographicsForm() {
         `${API_BASE}/api/demographics?address=${encodeURIComponent(address)}`
       );
 
-      if (res.data?.error) {
+      if (res.data.error) {
         setError(res.data.error);
       } else {
         setData(res.data);

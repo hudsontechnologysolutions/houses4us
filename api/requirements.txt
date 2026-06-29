@@ -1,4 +1,6 @@
 fastapi
+fastapi[standard]
 uvicorn
 requests
 python-multipart
+functools

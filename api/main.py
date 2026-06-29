@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import requests
+import sys
 
 CENSUS_API_KEY = os.environ.get("CENSUS_API_KEY", "")
 
@@ -67,6 +68,8 @@ def get_demographics(address: str = Query(..., description="Full property addres
     acs_url = (
         f"https://api.census.gov/data/2024/acs/acs5?get={vars_str}&for=tract:{census_tract}&in=state:34+county:017&key={CENSUS_API_KEY}"
     )
+
+    print("🚀 The root endpoint was triggered successfully!")
 
     try:
         acs_res = requests.get(acs_url, timeout=10)
