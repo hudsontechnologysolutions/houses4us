@@ -1,9 +1,11 @@
 import os
+from dotenv import load_dotenv
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 import sys
 
+load_dotenv()
 CENSUS_API_KEY = os.environ.get("CENSUS_API_KEY", "")
 
 app = FastAPI()
@@ -74,14 +76,19 @@ def get_demographics(address: str = Query(..., description="Full property addres
     try:
         acs_res = requests.get(acs_url, timeout=10)
         acs_res.raise_for_status()
-        acs_json = acs_res.json()
-        # acs_json[0] = headers, acs_json[1] = values
-        headers, values = acs_json
-        acs_data = dict(zip(headers, values))
     except requests.RequestException as e:
         return {"error": f"Failed to fetch ACS data: {str(e)}"}
+
+    try:
+        acs_json = acs_res.json()
+    except ValueError:
+        return {"error": f"ACS API returned non-JSON. Status: {acs_res.status_code}, Body: {acs_res.text[:500]}"}
+
+    try:
+        headers, values = acs_json
+        acs_data = dict(zip(headers, values))
     except (ValueError, IndexError):
-        return {"error": f"ACS API returned invalid response. Status: {acs_res.status_code}, Body: {acs_res.text[:500]}"}
+        return {"error": f"ACS API unexpected format: {str(acs_json)[:500]}"}
 
     # Format data for frontend
     demographics = {

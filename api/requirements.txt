@@ -3,4 +3,4 @@ fastapi[standard]
 uvicorn
 requests
 python-multipart
-functools
+python-dotenv
